@@ -1,0 +1,43 @@
+<div class="container mt-5">
+  <h2>Cadastro de Produto</h2>
+  
+  <form #produtoForm="ngForm" (ngSubmit)="onSubmit(produtoForm)">
+    <div class="form-group">
+      <label for="nome">Nome do Produto</label>
+      <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="produto.nome" required>
+    </div>
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <input type="text" class="form-control" id="descricao" name="descricao" [(ngModel)]="produto.descricao" required>
+    </div>
+    <div class="form-group">
+      <label for="preco">Preço de Venda</label>
+      <input type="number" class="form-control" id="preco" name="preco" [(ngModel)]="produto.precoVenda" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+  </form>
+
+  <h3 class="mt-5">Lista de Produtos</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produto of produtos">
+        <td>{{ produto.nome }}</td>
+        <td>{{ produto.descricao }}</td>
+        <td>{{ produto.precoVenda | currency }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="onEdit(produto)">Editar</button>
+          <button class="btn btn-danger" (click)="onDelete(produto.codigo)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
