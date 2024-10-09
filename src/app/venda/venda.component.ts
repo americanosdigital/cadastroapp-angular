@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; 
 import { VendaService } from '../services/venda.service';
 import { Venda } from '../models/venda.model';
 import { ClienteService } from '../services/cliente.service';
@@ -15,7 +16,7 @@ import { ItemVenda } from '../models/item-venda.model';
   templateUrl: './venda.component.html',
   styleUrls: ['./venda.component.css'],
   standalone: true, 
-  imports: [FormsModule, CommonModule]  
+  imports: [FormsModule, CommonModule, ReactiveFormsModule] 
 })
 export class VendaComponent implements OnInit {
   ItemVenda: { produto?: Produto, quantidade: number, precoVenda: number, valorTotal: number }[] = [];

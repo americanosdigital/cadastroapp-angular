@@ -1,55 +1,59 @@
-<div class="container mt-5">
-  <h2>Cadastro de Venda</h2>
-  
-  <form #vendaForm="ngForm" (ngSubmit)="onSubmit(vendaForm)">
-    <div class="form-group">
-      <label for="numero">Número da Venda</label>
-      <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="venda.numero" required>
-    </div>
-    <div class="form-group">
-      <label for="dataEmissao">Data de Emissão</label>
-      <input type="date" class="form-control" id="dataEmissao" name="dataEmissao" [(ngModel)]="venda.dataEmissao" required>
-    </div>
+<div class="card">
+  <div class="card-body">
+    <h2>Cadastro de Venda</h2>
 
-    <h4>Itens da Venda</h4>
-    <div *ngFor="let item of venda.itens; let i = index" class="form-row">
-      <div class="form-group col-md-6">
-        <label for="produto">Produto</label>
-        <select class="form-control" [(ngModel)]="item.produto" name="produto{{i}}" required>
-          <option *ngFor="let produto of produtos" [ngValue]="produto">{{produto.nome}}</option>
-        </select>
-      </div>
-      <div class="form-group col-md-3">
-        <label for="quantidade">Quantidade</label>
-        <input type="number" class="form-control" [(ngModel)]="item.quantidade" name="quantidade{{i}}" required>
-      </div>
-      <div class="form-group col-md-3">
-        <label for="preco">Preço</label>
-        <input type="number" class="form-control" [(ngModel)]="item.precoVenda" name="preco{{i}}" required>
-      </div>
-    </div>
+    <form #vendaForm="ngForm" (ngSubmit)="onSubmit(vendaForm)">
+      <div class="row mb-5">
+        <div class="col">
+          <label for="numero">Número da Venda</label>
+          <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="venda.numero" required>
+        </div>
+        <div class="col">
+          <label for="dataEmissao">Data de Emissão</label>
+          <input type="date" class="form-control" id="dataEmissao" name="dataEmissao" [(ngModel)]="venda.dataEmissao" required>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Salvar Venda</button>
-  </form>
+        <h4>Itens da Venda</h4>
+        <div *ngFor="let item of venda.itens; let i = index">
+          <div class="col">
+            <label for="produto">Produto</label>
+            <select class="form-control" [(ngModel)]="item.produto" name="produto{{i}}" required>
+              <option *ngFor="let produto of produtos" [ngValue]="produto">{{produto.nome}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" class="form-control" [(ngModel)]="item.quantidade" name="quantidade{{i}}" required>
+          </div>
+          <div class="col">
+            <label for="preco">Preço</label>
+            <input type="number" class="form-control" [(ngModel)]="item.precoVenda" name="preco{{i}}" required>
+          </div>
+        </div>
 
-  <h3 class="mt-5">Lista de Vendas</h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Número</th>
-        <th>Data de Emissão</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- <tr *ngFor="let vendas of vendas">
-        <td>{{ venda.numero }}</td>
-        <td>{{ venda.dataEmissao | date }}</td>
-        <td>
-          <button class="btn btn-warning" (click)="onEdit(venda)">Editar</button>
-           <button class="btn btn-danger" (click)="onDelete(venda.id)">Excluir</button> 
-        </td>
-      </tr> -->
-    </tbody>
-  </table>
+        <button type="submit" class="btn btn-primary">Salvar Venda</button>
+</div>
+    </form>
+
+    <h3 class="mt-5">Lista de Vendas</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Data de Emissão</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let vendas of vendas">
+          <td>{{ venda.numero }}</td>
+          <td>{{ venda.dataEmissao | date }}</td>
+          <td>
+            <button class="btn btn-warning" (click)="onEdit(venda)">Editar</button>
+             <button class="btn btn-danger" (click)="onDelete(venda.id)">Excluir</button>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
 </div>

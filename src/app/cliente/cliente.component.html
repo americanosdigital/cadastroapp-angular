@@ -1,101 +1,95 @@
-<div class="container mt-5">
-  <h2>Cadastro de Cliente</h2>
-  
-  <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="nome">Nome</label>
-        <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="cliente.nome" required>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" required>
-      </div>
-    </div>
+<div class="card">
+  <div class="card-body">
+    <h2>Cadastro de Cliente</h2>
 
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="telefone">Telefone</label>
-        <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="cliente.telefone" required>
+    <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
+      <div class="row mb-5">
+        <div class="col">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="cliente.nome" required>
+        </div>
+        <div class="col">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" required>
+        </div>
+        <div class="col">
+          <label for="telefone">Telefone</label>
+          <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="cliente.telefone" required>
+        </div>
+        <div class="col">
+          <label for="tipoCliente">Tipo de Cliente</label>
+          <select class="form-control" id="tipoCliente" name="tipoCliente" [(ngModel)]="cliente.tipoCliente" required>
+            <option value="Fisica">Pessoa Física</option>
+            <option value="Juridica">Pessoa Jurídica</option>
+          </select>
+        </div>
+        <!-- Endereço -->
+        <h4>Endereço</h4>
+        <div class="col">
+          <label for="logradouro">Logradouro</label>
+          <input type="text" class="form-control" id="logradouro" name="logradouro" [(ngModel)]="cliente.endereco.logradouro" required>
+        </div>
+        <div class="col">
+          <label for="numero">Número</label>
+          <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="cliente.endereco.numero" required>
+        </div>
+        <div class="col">
+          <label for="complemento">Complemento</label>
+          <input type="text" class="form-control" id="complemento" name="complemento" [(ngModel)]="cliente.endereco.complemento">
+        </div>
       </div>
-      <div class="form-group col-md-6">
-        <label for="tipoCliente">Tipo de Cliente</label>
-        <select class="form-control" id="tipoCliente" name="tipoCliente" [(ngModel)]="cliente.tipoCliente" required>
-          <option value="Fisica">Pessoa Física</option>
-          <option value="Juridica">Pessoa Jurídica</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Endereço -->
-    <h4>Endereço</h4>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="logradouro">Logradouro</label>
-        <input type="text" class="form-control" id="logradouro" name="logradouro" [(ngModel)]="cliente.endereco.logradouro" required>
-      </div>
-      <div class="form-group col-md-3">
-        <label for="numero">Número</label>
-        <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="cliente.endereco.numero" required>
-      </div>
-      <div class="form-group col-md-3">
-        <label for="complemento">Complemento</label>
-        <input type="text" class="form-control" id="complemento" name="complemento" [(ngModel)]="cliente.endereco.complemento">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
+      <div class="col">
         <label for="bairro">Bairro</label>
         <input type="text" class="form-control" id="bairro" name="bairro" [(ngModel)]="cliente.endereco.bairro" required>
       </div>
-      <div class="form-group col-md-4">
+      <div class="col">
         <label for="cidade">Cidade</label>
         <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="cliente.endereco.cidade" required>
       </div>
-      <div class="form-group col-md-4">
+      <div class="col">
         <label for="estado">Estado</label>
         <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="cliente.endereco.estado" required>
       </div>
-    </div>
+      <!-- Contatos -->
+      <h4>Contatos</h4>
+      <div class="col">
+        <label for="contatoNome">Nome do Contato</label>
+        <input type="text" class="form-control" id="contatoNome" name="contatoNome" [(ngModel)]="cliente.contatos[0].nome" required>
+      </div>
+      <div class="col">
+        <label for="contatoTelefone">Telefone do Contato</label>
+        <input type="text" class="form-control" id="contatoTelefone" name="contatoTelefone" [(ngModel)]="cliente.contatos[0].telefone" required>
+      </div>
+      <div class="col">
+        <label for="contatoEmail">Email do Contato</label>
+        <input type="email" class="form-control" id="contatoEmail" name="contatoEmail" [(ngModel)]="cliente.contatos[0].email" required>
+      </div>
 
-    <!-- Contatos -->
-    <h4>Contatos</h4>
-    <div class="form-group">
-      <label for="contatoNome">Nome do Contato</label>
-      <input type="text" class="form-control" id="contatoNome" name="contatoNome" [(ngModel)]="cliente.contatos[0].nome" required>
-    </div>
-    <div class="form-group">
-      <label for="contatoTelefone">Telefone do Contato</label>
-      <input type="text" class="form-control" id="contatoTelefone" name="contatoTelefone" [(ngModel)]="cliente.contatos[0].telefone" required>
-    </div>
-    <div class="form-group">
-      <label for="contatoEmail">Email do Contato</label>
-      <input type="email" class="form-control" id="contatoEmail" name="contatoEmail" [(ngModel)]="cliente.contatos[0].email" required>
-    </div>
+      <button type="submit" class="btn btn-primary">Salvar Cliente</button>
 
-    <button type="submit" class="btn btn-primary">Salvar Cliente</button>
-  </form>
+    </form>
 
-  <h3 class="mt-5">Lista de Clientes</h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Telefone</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cliente of clientes">
-        <td>{{ cliente.nome }}</td>
-        <td>{{ cliente.email }}</td>
-        <td>{{ cliente.telefone }}</td>
-        <td>
-          <button class="btn btn-warning" (click)="onEdit(cliente)">Editar</button>
-          <button class="btn btn-danger" (click)="onDelete(cliente.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <h3 class="mt-5">Lista de Clientes</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.telefone }}</td>
+          <td>
+            <button class="btn btn-warning" (click)="onEdit(cliente)">Editar</button>
+            <button class="btn btn-danger" (click)="onDelete(cliente.id)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
