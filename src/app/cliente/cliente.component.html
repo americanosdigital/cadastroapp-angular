@@ -2,7 +2,7 @@
   <div class="card-body">
     <h2>Cadastro de Cliente</h2>
 
-    <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
+    <form #clienteForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="row mb-5">
         <div class="col">
           <label for="nome">Nome</label>
@@ -86,7 +86,7 @@
           <td>{{ cliente.telefone }}</td>
           <td>
             <button class="btn btn-warning" (click)="onEdit(cliente)">Editar</button>
-            <button class="btn btn-danger" (click)="onDelete(cliente.id)">Excluir</button>
+            <button *ngIf="cliente.id !== null" class="btn btn-danger" (click)="onDelete(cliente.id)">Excluir</button>            
           </td>
         </tr>
       </tbody>

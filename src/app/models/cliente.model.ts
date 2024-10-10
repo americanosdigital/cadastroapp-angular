@@ -1,34 +1,54 @@
-// src/app/models/cliente.model.ts
-import { Endereco } from './endereco.model';
-import { Contato } from './contato.model';
-
 export class Cliente {
-  id!: number;
+  id!: number | null; // Permitir que id seja null inicialmente
   nome!: string;
-  tipoCliente!: TipoPessoa; 
   email!: string;
   telefone!: string;
-  endereco!: Endereco; 
-  contatos!: Contato[]; 
+  tipoCliente!: TipoPessoa; // Usar o enum ou tipo correto para tipoCliente
+  endereco!: Endereco;
+  contatos!: Contato[];
 
-  // Campos específicos para Pessoa Física
-  cpf?: string;
-  dataNascimento?: Date;
-  identidade?: string;
-
-  // Campos específicos para Pessoa Jurídica
-  cnpj?: string;
-  nomeFantasia?: string;
-  inscricaoEstadual?: string;
-  inscricaoMunicipal?: string;
+  constructor() {
+    this.id = null; // Inicia como null, pode ser atualizado quando um valor real estiver disponível
+    this.nome = '';
+    this.email = '';
+    this.telefone = '';
+    this.tipoCliente = TipoPessoa.Fisica; // Atribuir o valor correto do enum
+    this.endereco = new Endereco();
+    this.contatos = [new Contato()];
+  }
 }
 
-
-
-
-
-// Enum para definir o tipo de pessoa
 export enum TipoPessoa {
   Fisica = 'Fisica',
   Juridica = 'Juridica'
+}
+
+export class Endereco {
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+
+  constructor() {
+    this.logradouro = '';
+    this.numero = '';
+    this.complemento = '';
+    this.bairro = '';
+    this.cidade = '';
+    this.estado = '';
+  }
+}
+
+export class Contato {
+  nome: string;
+  telefone: string;
+  email: string;
+
+  constructor() {
+    this.nome = '';
+    this.telefone = '';
+    this.email = '';
+  }
 }

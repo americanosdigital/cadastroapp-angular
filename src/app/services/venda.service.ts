@@ -7,7 +7,7 @@ import { Venda } from '../models/venda.model';
   providedIn: 'root'
 })
 export class VendaService {
-  private apiUrl = 'https://localhost:5160/api/produtos';
+  private apiUrl = 'http://localhost:5160/api/Vendas';
 
   constructor(private http: HttpClient) { }
 

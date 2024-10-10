@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { ProdutoService } from '../services/produto.service';
 import { Produto } from '../models/produto.model';
 
@@ -10,13 +10,32 @@ import { Produto } from '../models/produto.model';
   templateUrl: './produto.component.html',
   styleUrls: ['./produto.component.css'],
   standalone: true, 
-  imports: [FormsModule, CommonModule]  
+  imports: [FormsModule, CommonModule, ReactiveFormsModule]
 })
 export class ProdutoComponent implements OnInit {
-  produto: Produto = new Produto();
+  
+  form: FormGroup;
+  // Inicializando o produto com valores padrão, incluindo o id
+  produto: Produto = {
+    id: 0,            // Inicializando o id como null
+    codigo: '',
+    nome: '',
+    descricao: '',
+    precoVenda: 0
+  };
   produtos: Produto[] = [];
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(private produtoService: ProdutoService) {
+
+     // Inicializando o formulário com controles reativos e valores padrão
+     this.form = new FormGroup({
+      codigo: new FormControl(''),
+      nome: new FormControl(''),
+      descricao: new FormControl(''),
+      precoVenda: new FormControl(''),
+     });
+
+  }
 
   ngOnInit(): void {
     this.getProdutos();  // Carrega os produtos ao iniciar o componente
@@ -25,7 +44,10 @@ export class ProdutoComponent implements OnInit {
   // Função para obter todos os produtos
   getProdutos(): void {
     this.produtoService.getProdutos().subscribe(
-      (produtos) => this.produtos = produtos,
+      (produtos) => {
+        this.produtos = produtos;
+        console.log('Produtos carregados', produtos);
+      },
       (error) => console.error('Erro ao buscar produtos', error)
     );
   }
@@ -33,10 +55,14 @@ export class ProdutoComponent implements OnInit {
   // Função para salvar um produto
   onSubmit(produtoForm: NgForm): void {
     if (produtoForm.valid) {
-      if (this.produto.codigo) {
+      if (this.produto.id) {
         // Atualizar produto existente
         this.produtoService.updateProduto(this.produto.codigo, this.produto).subscribe(
-          () => this.getProdutos(),
+          () => {
+            this.getProdutos();
+            produtoForm.reset();
+            console.log('Produto atualizado com sucesso');
+          },
           (error) => console.error('Erro ao atualizar produto', error)
         );
       } else {
@@ -45,6 +71,7 @@ export class ProdutoComponent implements OnInit {
           () => {
             this.getProdutos();
             produtoForm.reset();
+            console.log('Produto criado com sucesso');
           },
           (error) => console.error('Erro ao criar produto', error)
         );
@@ -55,14 +82,17 @@ export class ProdutoComponent implements OnInit {
   // Função para editar um produto
   onEdit(produto: Produto): void {
     this.produto = { ...produto };  // Carregar os dados do produto no formulário
+    console.log('Editando produto', produto);
   }
 
   // Função para deletar um produto
   onDelete(codigo: string): void {
     this.produtoService.deleteProduto(codigo).subscribe(
-      () => this.getProdutos(),
+      () => {
+        this.getProdutos();
+        console.log('Produto deletado com sucesso');
+      },
       (error) => console.error('Erro ao deletar produto', error)
     );
   }
 }
-

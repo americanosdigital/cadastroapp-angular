@@ -1,58 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; 
 import { VendaService } from '../services/venda.service';
 import { Venda } from '../models/venda.model';
-import { ClienteService } from '../services/cliente.service';
+import { Produto } from '../models/produto.model';
 import { ProdutoService } from '../services/produto.service';
 import { Cliente } from '../models/cliente.model';
-import { Produto } from '../models/produto.model';
-import { ItemVenda } from '../models/item-venda.model';
+import { ClienteService } from '../services/cliente.service';
 
 @Component({
   selector: 'app-venda',
   templateUrl: './venda.component.html',
   styleUrls: ['./venda.component.css'],
   standalone: true, 
-  imports: [FormsModule, CommonModule, ReactiveFormsModule] 
+  imports: [FormsModule, CommonModule]  
 })
 export class VendaComponent implements OnInit {
-  ItemVenda: { produto?: Produto, quantidade: number, precoVenda: number, valorTotal: number }[] = [];
   venda: Venda = new Venda();
-  clientes: Cliente[] = [];
+  vendas: Venda[] = [];
   produtos: Produto[] = [];
+  clientes: Cliente[] = [];
+  item: { produto: Produto, quantidade: number, precoVenda: number, valorTotal: number } = {
+    produto: {} as Produto,
+    quantidade: 1,
+    precoVenda: 0,
+    valorTotal: 0
+  };
 
-  constructor(
-    private vendaService: VendaService,
-    private clienteService: ClienteService,
-    private produtoService: ProdutoService
-  ) {}
-
-  adicionarItem(): void {
-    this.ItemVenda.push({
-     
-      quantidade: 1,
-      precoVenda: 0,
-      valorTotal: 0
-    });
-  }
+  constructor(private vendaService: VendaService, private produtoService: ProdutoService) {}
 
   ngOnInit(): void {
-    this.getClientes();
-    this.getProdutos();    
+    this.getVendas();
+    this.getProdutos();  // Carrega os produtos disponíveis
   }
 
-  // Função para obter clientes
-  getClientes(): void {
-    this.clienteService.getClientes().subscribe(
-      (clientes) => this.clientes = clientes,
-      (error) => console.error('Erro ao buscar clientes', error)
+  // Função para obter todas as vendas
+  getVendas(): void {
+    this.vendaService.getVendas().subscribe(
+      (vendas) => this.vendas = vendas,
+      (error) => console.error('Erro ao buscar vendas', error)
     );
   }
 
-  // Função para obter produtos
+  // Função para obter todos os produtos (para adicionar itens à venda)
   getProdutos(): void {
     this.produtoService.getProdutos().subscribe(
       (produtos) => this.produtos = produtos,
@@ -60,35 +51,58 @@ export class VendaComponent implements OnInit {
     );
   }
 
-  // Função para enviar a venda
-  onSubmit(vendaForm: NgForm): void {
-    if (vendaForm.valid) {
-      this.vendaService.createVenda(this.venda).subscribe(
-        () => {
-          this.resetForm(vendaForm);
-        },
-        (error) => console.error('Erro ao criar venda', error)
-      );
+  // Função para adicionar um item à venda
+  adicionarItem(): void {
+    if (this.item.produto && this.item.quantidade > 0) {
+      this.item.precoVenda = this.item.produto.precoVenda;
+      this.item.valorTotal = this.item.precoVenda * this.item.quantidade;
+
+      if (!this.venda.itens) {
+        this.venda.itens = [];
+      }
+
+      this.venda.itens.push({ 
+        produto: this.item.produto,
+        quantidade: this.item.quantidade,
+        precoVenda: this.item.precoVenda,
+        valorTotal: this.item.valorTotal
+      });
+
+      // Reseta o item para adicionar o próximo
+      this.item = {
+        produto: {} as Produto,
+        quantidade: 1,
+        precoVenda: 0,
+        valorTotal: 0
+      };
     }
   }
 
-  // Função para resetar o formulário
-  resetForm(vendaForm: NgForm): void {
-    vendaForm.reset();
-    this.venda = new Venda();
+  // Função para enviar o formulário e salvar uma venda
+  onSubmit(vendaForm: NgForm): void {
+    if (vendaForm.valid && this.venda.itens.length > 0) {
+      this.vendaService.createVenda(this.venda).subscribe(
+        () => {
+          this.getVendas();
+          vendaForm.reset();
+        },
+        (error) => console.error('Erro ao criar venda', error)
+      );
+    } else {
+      console.error('Formulário inválido ou sem itens de venda');
+    }
   }
 
-  // Função para editar um produto
+  // Função para editar uma venda
   onEdit(venda: Venda): void {
-    this.venda = { ...venda };  // Carregar os dados do venda no formulário
+    this.venda = { ...venda };  // Carrega os dados da venda selecionada no formulário
   }
 
-  // Função para deletar um produto
-  // onDelete(id: number): void {
-  //   this.vendaService.deleteVenda(id).subscribe(
-  //     () => this.getVenda(),
-  //     (error) => console.error('Erro ao deletar Venda', error)
-  //   );
-  // }
-
+  // Função para deletar uma venda
+  onDelete(vendaId: number): void {
+    this.vendaService.deleteVenda(vendaId).subscribe(
+      () => this.getVendas(),
+      (error) => console.error('Erro ao deletar venda', error)
+    );
+  }
 }
