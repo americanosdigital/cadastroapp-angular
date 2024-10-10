@@ -8,19 +8,19 @@
       <!-- Campo para Número da Venda -->
       <div class="col">
         <label for="numero">Número da Venda</label>
-        <input type="text" id="numero" class="form-control" [(ngModel)]="venda.numero" name="numero" required />
+        <input type="text" id="numero" class="form-control" [(ngModel)]="venda.numero" name="numero"  [ngClass]="{ 'editing-field': venda.id }" required />
       </div>
     <!-- Campo para Data de Emissão -->
     <div class="col">
       <label for="dataEmissao">Data de Emissão</label>
-      <input type="date" id="dataEmissao" class="form-control" [(ngModel)]="venda.dataEmissao" name="dataEmissao" required />
+      <input type="date" id="dataEmissao" class="form-control" [(ngModel)]="venda.dataEmissao" name="dataEmissao" [ngClass]="{ 'editing-field': venda.id }" required />
     </div>
 
     <!-- Seleção de Cliente -->
     <div class="col">
-      <label for="cliente">Cliente</label>
+      <label for="cliente">cliente</label>
       <select id="cliente" class="form-control" [(ngModel)]="venda.cliente.id" name="cliente" required>
-        <option *ngFor="let cliente of clientes" [value]="cliente.id">
+        <option *ngfor="let cliente of clientes" [value]="cliente.id">
           {{ cliente.nome }}
         </option>
       </select>
@@ -32,14 +32,9 @@
       <div class="row">
         <div class="col-md-6">
           <label for="produto">Produto</label>
-          <select 
-            id="produto" 
-            class="form-control" 
-            [(ngModel)]="item.produto" 
-            name="produto" 
-            required>
-            <option *ngFor="let produto of produtos" [value]="produto">
-              {{ produto.nome }} - R$ {{ produto.precoVenda }}
+          <select id="produto" class="form-control" [(ngModel)]="venda.produtoId" name="produto" required>
+            <option *ngFor="let produto of produtos" [value]="produto.id">
+              {{ produto.nome }}
             </option>
           </select>
         </div>

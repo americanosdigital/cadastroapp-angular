@@ -14,6 +14,6 @@ export class AppComponent {
 
   ngOnInit() {
 
-    var data = localStorage.getItem('agendaapp');
+    var data = localStorage.getItem('CadastroAPP');
   }
 }

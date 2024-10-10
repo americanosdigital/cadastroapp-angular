@@ -6,19 +6,19 @@
       <div class="row mb-5">
         <div class="col">
           <label for="nome">Nome</label>
-          <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="cliente.nome" required>
+          <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="cliente.nome" [ngClass]="{ 'editing-field': cliente.id }" required>
         </div>
         <div class="col">
           <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" required>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="cliente.email" [ngClass]="{ 'editing-field': cliente.id }" required>
         </div>
         <div class="col">
           <label for="telefone">Telefone</label>
-          <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="cliente.telefone" required>
+          <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="cliente.telefone" [ngClass]="{ 'editing-field': cliente.id }" required>
         </div>
         <div class="col">
           <label for="tipoCliente">Tipo de Cliente</label>
-          <select class="form-control" id="tipoCliente" name="tipoCliente" [(ngModel)]="cliente.tipoCliente" required>
+          <select class="form-control" id="tipoCliente" name="tipoCliente" [(ngModel)]="cliente.tipoCliente" [ngClass]="{ 'editing-field': cliente.id }" required>
             <option value="Fisica">Pessoa Física</option>
             <option value="Juridica">Pessoa Jurídica</option>
           </select>
@@ -27,42 +27,42 @@
         <h4>Endereço</h4>
         <div class="col">
           <label for="logradouro">Logradouro</label>
-          <input type="text" class="form-control" id="logradouro" name="logradouro" [(ngModel)]="cliente.endereco.logradouro" required>
+          <input type="text" class="form-control" id="logradouro" name="logradouro" [(ngModel)]="cliente.endereco.logradouro" [ngClass]="{ 'editing-field': cliente.id }" required>
         </div>
         <div class="col">
           <label for="numero">Número</label>
-          <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="cliente.endereco.numero" required>
+          <input type="text" class="form-control" id="numero" name="numero" [(ngModel)]="cliente.endereco.numero"  [ngClass]="{ 'editing-field': cliente.id }" required>
         </div>
         <div class="col">
           <label for="complemento">Complemento</label>
-          <input type="text" class="form-control" id="complemento" name="complemento" [(ngModel)]="cliente.endereco.complemento">
+          <input type="text" class="form-control" id="complemento" name="complemento" [(ngModel)]="cliente.endereco.complemento" [ngClass]="{ 'editing-field': cliente.id }">
         </div>
       </div>
       <div class="col">
         <label for="bairro">Bairro</label>
-        <input type="text" class="form-control" id="bairro" name="bairro" [(ngModel)]="cliente.endereco.bairro" required>
+        <input type="text" class="form-control" id="bairro" name="bairro" [(ngModel)]="cliente.endereco.bairro" [ngClass]="{ 'editing-field': cliente.id }" required>
       </div>
       <div class="col">
         <label for="cidade">Cidade</label>
-        <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="cliente.endereco.cidade" required>
+        <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="cliente.endereco.cidade" [ngClass]="{ 'editing-field': cliente.id }" required>
       </div>
       <div class="col">
         <label for="estado">Estado</label>
-        <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="cliente.endereco.estado" required>
+        <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="cliente.endereco.estado" [ngClass]="{ 'editing-field': cliente.id }" required>
       </div>
       <!-- Contatos -->
       <h4>Contatos</h4>
       <div class="col">
         <label for="contatoNome">Nome do Contato</label>
-        <input type="text" class="form-control" id="contatoNome" name="contatoNome" [(ngModel)]="cliente.contatos[0].nome" required>
+        <input type="text" class="form-control" id="contatoNome" name="contatoNome" [(ngModel)]="cliente.contatos[0].nome" [ngClass]="{ 'editing-field': cliente.id }" required>
       </div>
       <div class="col">
         <label for="contatoTelefone">Telefone do Contato</label>
-        <input type="text" class="form-control" id="contatoTelefone" name="contatoTelefone" [(ngModel)]="cliente.contatos[0].telefone" required>
+        <input type="text" class="form-control" id="contatoTelefone" name="contatoTelefone" [(ngModel)]="cliente.contatos[0].telefone" [ngClass]="{ 'editing-field': cliente.id }" required>
       </div>
       <div class="col">
         <label for="contatoEmail">Email do Contato</label>
-        <input type="email" class="form-control" id="contatoEmail" name="contatoEmail" [(ngModel)]="cliente.contatos[0].email" required>
+        <input type="email" class="form-control" id="contatoEmail" name="contatoEmail" [(ngModel)]="cliente.contatos[0].email" [ngClass]="{ 'editing-field': cliente.id }" required>
       </div>
 
       <button type="submit" class="btn btn-primary">Salvar Cliente</button>
@@ -85,8 +85,9 @@
           <td>{{ cliente.email }}</td>
           <td>{{ cliente.telefone }}</td>
           <td>
-            <button class="btn btn-warning" (click)="onEdit(cliente)">Editar</button>
-            <button *ngIf="cliente.id !== null" class="btn btn-danger" (click)="onDelete(cliente.id)">Excluir</button>            
+            <button class="btn btn-warning btn-sm" (click)="onEdit(cliente)">Editar</button>
+            <div class="vr"></div>
+            <button *ngIf="cliente.id !== null" class="btn btn-danger btn-sm" (click)="onDelete(cliente.id)">Excluir</button>            
           </td>
         </tr>
       </tbody>

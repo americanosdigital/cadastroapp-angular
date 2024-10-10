@@ -17,7 +17,7 @@ import { ClienteService } from '../services/cliente.service';
   imports: [FormsModule, CommonModule]  
 })
 export class VendaComponent implements OnInit {
-  venda: Venda = new Venda();
+ // venda: Venda = new Venda();
   vendas: Venda[] = [];
   produtos: Produto[] = [];
   clientes: Cliente[] = [];
@@ -25,6 +25,19 @@ export class VendaComponent implements OnInit {
     produto: {} as Produto,
     quantidade: 1,
     precoVenda: 0,
+    valorTotal: 0
+  };
+
+  venda: Venda = {
+    id: 0, // Inicializando os campos de venda
+
+    //clienteId: null,
+    dataEmissao: new Date(),
+    itens: [], // Certifique-se de inicializar com um array vazio
+    numero: 0,
+    cliente: new Cliente,
+    produto: new Produto,
+    produtoId: 0,
     valorTotal: 0
   };
 
@@ -45,7 +58,7 @@ export class VendaComponent implements OnInit {
 
   // Função para obter todos os produtos (para adicionar itens à venda)
   getProdutos(): void {
-    this.produtoService.getProdutos().subscribe(
+    this.produtoService.getProdutos().subscribe(      
       (produtos) => this.produtos = produtos,
       (error) => console.error('Erro ao buscar produtos', error)
     );

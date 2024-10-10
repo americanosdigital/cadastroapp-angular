@@ -57,8 +57,8 @@ export class ProdutoComponent implements OnInit {
     if (produtoForm.valid) {
       if (this.produto.id) {
         // Atualizar produto existente
-        this.produtoService.updateProduto(this.produto.codigo, this.produto).subscribe(
-          () => {
+        this.produtoService.updateProduto(this.produto.id, this.produto).subscribe(          
+          () => {console.log("produtoId :", this.produto.id);
             this.getProdutos();
             produtoForm.reset();
             console.log('Produto atualizado com sucesso');
@@ -86,13 +86,14 @@ export class ProdutoComponent implements OnInit {
   }
 
   // Função para deletar um produto
-  onDelete(codigo: string): void {
-    this.produtoService.deleteProduto(codigo).subscribe(
-      () => {
-        this.getProdutos();
-        console.log('Produto deletado com sucesso');
-      },
-      (error) => console.error('Erro ao deletar produto', error)
-    );
+  onDelete(id: number | null): void {
+    if (id !== null) {
+      this.produtoService.deleteProduto(id).subscribe(
+        () => this.getProdutos(),
+        (error) => console.error('Erro ao deletar produto', error)
+      );
+    } else {
+      console.error('ID do produto é null. Não é possível excluir.');
+    }
   }
-}
+}   
